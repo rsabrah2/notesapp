@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<h1>Notes List</h1>
+<p> <a href="{% url 'upload' %}" class="btn btn-primary">Upload Book</a> </p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>User</th>
+        <th>Title</th>
+        <th>Textfile</th>
+        <th>Audiofile</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for note in notes %}
+    <tr>
+        <td>{{note.user}}</td>
+        <td>{{note.title}}</td>
+        <td><a href="{{ note.textfile.url}}" class="btn btn-primary btn-sm" target="_blank"> Download Textfile</a> </td>
+        {% if note.wavfile %}
+        <td><a href="{{ note.wavfile.url}}" class="btn btn-primary btn-sm" target="_blank"> Download Wavfile</a> </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

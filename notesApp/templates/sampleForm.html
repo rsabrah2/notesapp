@@ -1,0 +1,13 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    Enter first number: <input type="file" name="document"> <br>
+    Enter userid: <input type="text" name="userid"><br>
+    Enter keyword: <input type="text" name="keyword"><br>
+    <input type="submit">
+  </form>
+
+<h3>{{txtfile}}</h3>
+{% endblock %}
