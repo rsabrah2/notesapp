@@ -24,7 +24,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('upload/', views.upload, name='upload'),
     path('notes/', views.list_notes,name='list_notes'),
-    path('simple/', views.sampleForm, name='sampleForm')
+    path('listen/', views.listen, name='listen'),
+
 
 
 ]

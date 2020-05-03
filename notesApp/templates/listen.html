@@ -1,0 +1,41 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>Enter a keyword</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Find from Database</button>
+</form>
+    {% if notes %}
+    <p>You are searching for user {{user}}'s notes for keyword {{keyword}}</p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>User</th>
+                <th>Title</th>
+                <th>Textfile</th>
+                <th>Audiofile</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for note in notes %}
+            <tr>
+                <td>{{note.user}}</td>
+                <td>{{note.title}}</td>
+                <td><a href="{{ note.textfile.url}}" class="btn btn-primary btn-sm" target="_blank"> Download Textfile</a> </td>
+                {% if note.wavfile %}
+                <td><a href="{{ note.wavfile.url}}" class="btn btn-primary btn-sm" target="_blank"> Download Wavfile</a> </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+    {% if entry %}
+    <h3>{{entry}}</h3>
+    {% endif %}
+<p> <a href="{% url 'upload' %}" class="btn btn-primary">Upload more Notes</a> </p>
+{% endblock %}
