@@ -20,10 +20,12 @@
         <td><a href="{{ note.textfile.url}}" class="btn btn-primary btn-sm" target="_blank"> Download Textfile</a> </td>
         {% if note.wavfile %}
         <td><a href="{{ note.wavfile.url}}" class="btn btn-primary btn-sm" target="_blank"> Download Wavfile</a> </td>
+        {% else %}
+        <td>This Entry has no WavFile</td>
         {% endif %}
     </tr>
     {% endfor %}
     </tbody>
 </table>
-
+<p> <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a> </p>
 {% endblock %}

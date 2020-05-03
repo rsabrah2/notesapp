@@ -48,7 +48,7 @@ def upload(request):
             speechfile = "/mnt/Audiofiles/audiofiles/combined/" + filename
             command2run = "mpirun -n 3 python3 "+python_file+ " " + textfile + " " \
                           + filename
-            print(command2run)
+            #print(command2run)
             os.system(command2run)
             wavefile = open(speechfile,'rb')
             django_wvfile=File(wavefile)
@@ -66,41 +66,33 @@ def upload(request):
     return render(request,"upload.html",{'form':form,'txt':basefile,'userid':userid})
 
 def listen(request):
+    entry = ""
+    user = ""
+    keyword = ""
+    notes = NotesDb.objects.filter(user__iexact=user)
     if request.method=='POST':
         form = DBQuery(request.POST)
         if form.is_valid():
             user = form.cleaned_data.get("user")
             keyword = form.cleaned_data.get("keyword")
             form = DBQuery()
-            notes=NotesDb.objects.filter(user__iexact=user).filter(title__icontains=keyword)
+            if (user == '*' and keyword =='*'):
+                notes=NotesDb.objects.all()
+            elif (user =='*'):
+                notes = NotesDb.objects.filter(title__icontains=keyword)
+            elif (keyword=='*'):
+                notes = NotesDb.objects.filter(user__iexact=user)
+            else:
+                notes=NotesDb.objects.filter(user__iexact=user).filter(title__icontains=keyword)
             if len(notes) < 1:
                 entry="Query didn't return Anything"
-
     else:
         form = DBQuery()
-        user = ""
-        keyword = ""
-        entry =""
-        #notes=NotesDb.objects.all()
-        notes = NotesDb.objects.filter(user__iexact=user)
+        entry = ""
+
 
     return render(request,"listen.html",{'form': form, 'user':user, 'keyword':keyword,'notes':notes,'entry':entry})
 
-#Just for testing
 
-def sampleForm(request):
-    module_dir = os.path.dirname(__file__)  # get current directory
-    if request.method=='POST':
-        uploaded_file = request.FILES['document']
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_file.name,uploaded_file)
-        file = fs.open(name, 'rb')
-        filetype=str(type(file))
-    else:
-        form = RegularForm()
-        tfile_name= ''
-        file_path = ''
-        file=''
-        filetype =""
-
-    return render(request,'sampleForm.html',{'txtfile':filetype})
+def about(request):
+    return render(request,"about.html")

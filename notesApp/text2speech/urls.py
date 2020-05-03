@@ -25,6 +25,7 @@ urlpatterns = [
     path('upload/', views.upload, name='upload'),
     path('notes/', views.list_notes,name='list_notes'),
     path('listen/', views.listen, name='listen'),
+    path('about/', views.about, name='about')
 
 
 

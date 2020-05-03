@@ -8,6 +8,7 @@ class NoteUpload(forms.ModelForm):
         fields = ('user', 'title', 'textfile')
 
 
+
 class DBQuery(forms.Form):
     user = forms.CharField(max_length=100)
     keyword = forms.CharField(max_length=100)
