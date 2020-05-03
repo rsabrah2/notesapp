@@ -64,7 +64,7 @@ def upload(request):
             os.system(command2run)
             wavefile = open(speechfile,'rb')
             django_wvfile=File(wavefile)
-            notes.wavfile.save("wavefile",django_wvfile,save=True)
+            notes.wavfile.save(str(wavefile),django_wvfile,save=True)
             """wv=str(type(wavefile))
             wv2=notes.wavfile
             wv2b=str(type(wv2))"""
@@ -76,7 +76,7 @@ def upload(request):
         textfile=''
         file_path = ''
         file=''
-        wv=''
+        #wv=''
         wv2b=''
         userid=''
-    return render(request,"upload.html",{'form':form,'txt':basefile,'userid':userid,'file':wv})
+    return render(request,"upload.html",{'form':form,'txt':basefile,'userid':userid})
