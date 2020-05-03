@@ -1,12 +1,14 @@
 {% extends 'base.html'%}
 {% load crispy_forms_tags %}
 {% block content %}
-<h2>Enter a keyword</h2>
+<h2>Enter username and keyword</h2>
+Use wildcard * for all entries
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
     <button type="submit" class="btn btn-primary">Find from Database</button>
 </form>
+<div>
     {% if notes %}
     <p>You are searching for user {{user}}'s notes for keyword {{keyword}}</p>
 
@@ -27,6 +29,8 @@
                 <td><a href="{{ note.textfile.url}}" class="btn btn-primary btn-sm" target="_blank"> Download Textfile</a> </td>
                 {% if note.wavfile %}
                 <td><a href="{{ note.wavfile.url}}" class="btn btn-primary btn-sm" target="_blank"> Download Wavfile</a> </td>
+                {% else %}
+                <td>This Entry has no WavFile</td>
                 {% endif %}
             </tr>
             {% endfor %}
@@ -37,5 +41,8 @@
     {% if entry %}
     <h3>{{entry}}</h3>
     {% endif %}
+</div>
 <p> <a href="{% url 'upload' %}" class="btn btn-primary">Upload more Notes</a> </p>
+
+<p> <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a> </p>
 {% endblock %}
