@@ -13,7 +13,7 @@ import sys
 import glob
 import shutil
 import os
-
+from django.core.files import File  # To write to FileField of database
 
 # Create your views here.
 def home(request):
@@ -63,9 +63,11 @@ def upload(request):
                           + filename +" " +speechfile
             os.system(command2run)
             wavefile = open(speechfile,'rb')
-            wv=str(type(wavefile))
+            django_wvfile=File(wavefile)
+            notes.wavfile.save("wavefile",django_wvfile,save=True)
+            """wv=str(type(wavefile))
             wv2=notes.wavfile
-            wv2b=str(type(wv2))
+            wv2b=str(type(wv2))"""
             #notes.wavfile=wavefile
             #notes.save
     else:
