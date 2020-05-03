@@ -27,7 +27,7 @@ if __name__ == "__main__":
     size = comm.Get_size()
     notestxt = str(sys.argv[1])
     filename = str(sys.argv[2])  # filename for the combined wave fie
-    combinedfile = str(sys.argv[3])
+    #combinedfile = str(sys.argv[3])
     separator = ""
     if rank == 0:
         f = open(notestxt, 'r')
