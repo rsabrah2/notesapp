@@ -19,6 +19,7 @@ Use wildcard * for all entries
                 <th>Title</th>
                 <th>Textfile</th>
                 <th>Audiofile</th>
+                <th>Time Saved</th>
             </tr>
             </thead>
             <tbody>
@@ -32,6 +33,7 @@ Use wildcard * for all entries
                 {% else %}
                 <td>This Entry has no WavFile</td>
                 {% endif %}
+                <td>{{note.timestamp}}</td>
             </tr>
             {% endfor %}
             </tbody>

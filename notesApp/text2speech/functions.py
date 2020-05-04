@@ -39,4 +39,5 @@ def total_time(totalsec):
     t_hr = totalsec // 3600
     t_min = (totalsec % 3600) // 60
     t_sec = (totalsec % 3600) % 60
-    print("Total time to run the code is %02d:%02d:%09.6f" % (t_hr, t_min, t_sec))
+    return t_hr, t_min, t_sec
+

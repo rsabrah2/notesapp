@@ -5,10 +5,19 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
+    <br>
+    Choose Number of processes: <input type="text" name="nprocs" required="required">
+    <br>
     <button type="submit" class="btn btn-primary">Upload Notes</button>
 </form>
-<p>{{txt}}</p>
-<p>{{userid}}</p>
+{% if nprocs != "1" %}
+<p> The Number of processors used is: {{nprocs}}</p>
+{% endif %}
+{% if msg != "" %}
+<h3>{{msg}}</h3>
+<h5>Time to upload is {{time}} seconds</h5>
+{% endif %}
+<p> <a href="{% url 'listen' %}" class="btn btn-primary">Access Database</a> </p>
 <p> <a href="{% url 'list_notes' %}" class="btn btn-primary">Go to Notes List</a> </p>
 <p> <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a> </p>
 {% endblock %}

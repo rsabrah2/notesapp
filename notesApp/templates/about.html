@@ -1,9 +1,20 @@
 {% extends 'base.html'%}
 
 {% block content %}
-<h2>Group 8's NotesApp</h2>
+<h2>NotesApp</h2>
 <div>
-
+<h4>Group Members:</h4> Gandali Patil and Rani Abraham
+    <br>
+    <h4>Project Scope</h4>
+    <p>Our idea is a text to speech conversion app that utilizes Google's text-to-speech API. In our GUI, we ask the user
+    to select between uploading notes and accessing the database for saved voice files. The user will also have the option
+    to specify the number of processes to use for the MPI part.</p>
+    <p>Once the user uploads the file, the file is divided among the processes and each process will convert its excerpt to speech.
+    The root node will combine all individual speech file. This file will be saved into the database, along with the information entered
+    in the form</p>
+    <p>The app also allows users to find notes based on keyword. We used PostgreSQL database to saved our entries. The user
+    can search for its own files or other users files. Currently, we have not added login feature to the app. The user is further
+    able to download the voice file for later use. </p>
 
 </div>
 

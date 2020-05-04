@@ -46,7 +46,7 @@ if __name__ == "__main__":
         If number of lines is less than the # of processors, going to the divide the work by groups of words
         """
         if ln < size:
-            notes_split = file.split()
+            notes_split = Notes.split()
             notes_split = [x for x in notes_split if x.strip()]  # removes any lists with just spaces
             n = len(notes_split)
             div_cat = "words"
@@ -84,5 +84,5 @@ if __name__ == "__main__":
         #basefile = settings.MEDIA_ROOT
 
         #print("Maangatholi",basefile)
-        total_time(t_total)
+        a,b,c = total_time(t_total)
 
