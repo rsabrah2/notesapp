@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 KEY = (os.environ.get('WB_KEY'))
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = KEY
+SECRET_KEY = 'hwx9nll*azn5$11*$f39@*p^%2z%k^$7fla5)7^!+my(e@*ux'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,8 +87,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'NotesApp',
-        'USER': PGUSER,
-        'PASSWORD' : PGPSWD,
+        'USER':'mpiuser' ,
+        'PASSWORD' : 'grp8DB@cc',
         'HOST' : '127.0.0.1'
 
     }
