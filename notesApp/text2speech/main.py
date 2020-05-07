@@ -1,14 +1,10 @@
-# To call mpirun -n [nprocs] python3 main.py [notesfile] [userid]
+# To call mpirun -n [nprocs] python3 main.py [notesfilename] [combinedfilename]
 #
 #
 from django.conf import settings
 import sys
 from gtts import gTTS
 from mpi4py import MPI
-import glob
-import shutil
-import os
-from django.core.files.storage import default_storage
 # Ignore the error
 from functions import  combineaudio, remove_audio, total_time
 comm = MPI.COMM_WORLD
@@ -25,11 +21,14 @@ if __name__ == "__main__":
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
     size = comm.Get_size()
-    notestxt = str(sys.argv[1])
+    notestxt = str(sys.argv[1])  #file name of the uploaded text file
     filename = str(sys.argv[2])  # filename for the combined wave fie
-    #combinedfile = str(sys.argv[3])
+
     separator = ""
     if rank == 0:
+        """
+        In the root node, each text file is opened and a list is made by splitting the file into lines
+        """
         f = open(notestxt, 'r')
         file = f.read()
         f.close()
@@ -46,7 +45,7 @@ if __name__ == "__main__":
         If number of lines is less than the # of processors, going to the divide the work by groups of words
         """
         if ln < size:
-            notes_split = Notes.split()
+            notes_split = file.split()
             notes_split = [x for x in notes_split if x.strip()]  # removes any lists with just spaces
             n = len(notes_split)
             div_cat = "words"
@@ -55,6 +54,10 @@ if __name__ == "__main__":
             div_cat = "lines"
             n = ln
             separator = ". "
+        """
+        This section of the code refers 
+        https://www.kth.se/blogs/pdc/2019/08/parallel-programming-in-python-mpi4py-part-1/.
+        """
         local_n, remainder = divmod(n, size)
         counts = [local_n + 1 if i < remainder else local_n for i in range(size)]
         # determine the starting and ending indices of each sub-task
@@ -69,20 +72,17 @@ if __name__ == "__main__":
     text2send = separator.join(local_text) + "."
 
     language = 'en'
-    # print ("process " + str(rank) + " has " + str(type(local_text)) +" " + text2send)
+
     speech = gTTS(text=text2send, lang=language, slow=False)
     speechfile = "/mnt/Audiofiles/audiofiles/voice" + str(rank) + ".wav"
     speech.save(speechfile)
-    # comm.Barrier()
+    # Gives time for individual nodes to perform the conversion
     comm.Barrier()
     if rank == 0:
-        print("The file name is %s" % notestxt)
-        combineaudio(filename)
-        remove_audio(size)
-        t_end = MPI.Wtime()
-        t_total = t_end - t_start
-        #basefile = settings.MEDIA_ROOT
 
-        #print("Maangatholi",basefile)
-        a,b,c = total_time(t_total)
+        # Calls the function to combine the audio
+        combineaudio(filename)
+        # Calls the function to remove the individual files created by individual nodes
+        remove_audio(size)
+
 

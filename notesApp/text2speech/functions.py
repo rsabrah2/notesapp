@@ -1,7 +1,7 @@
 # This file contains all the functions created for the Notes app
-from datetime import datetime
-import glob
-import shutil
+
+import glob    # Needed for combining the various .wav files
+import shutil   # Needed for combining the various .wav files
 import os
 
 
@@ -11,16 +11,13 @@ def combineaudio(combinedname):
     output_file = dirPath + "combined/" + combinedname
     output = open(output_file, 'wb')
     filenames = glob.glob(dirPath + "*.wav")
-
     numberoffiles = len(filenames)
 
     for i in range(numberoffiles):
         filename = dirPath + "voice" + str(i) + ".wav"
-        # print("Combining file %s" % filename)
-        shutil.copyfileobj(open(filename, 'rb'), output)
+        shutil.copyfileobj(open(filename, 'rb'), output) #combines individual wavefiles
 
-    #print("Done combining files. See the final version in %s" % output_file)
-    #print("Done! See the final version in %s" % output_file)
+
     output.close()
 
 
@@ -29,7 +26,6 @@ def remove_audio(size):
     filepath = "/mnt/Audiofiles/audiofiles/"
     for i in range(size):
         filename = filepath + "voice" + str(i) + ".wav"
-        #print("Removing file %s" % filename)
         os.remove(filename)
     print("Done!")
 
